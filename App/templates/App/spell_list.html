@@ -1,0 +1,37 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Hechizos</h2>
+  <a href="{% url 'spell_new' %}" class="btn btn-primary mb-3">Añadir Nuevo Hechizo</a>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Nivel</th>
+          <th scope="col">Escuela</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for spell in spell_list %}
+        <tr>
+          <td>{{ spell.spell_name }}</td>
+          <td>{{ spell.spell_level }}</td>
+          <td>{{ spell.spell_school }}</td>
+          <td>
+            <a href="{% url 'spell_detail' spell.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
+            <a href="{% url 'spell_edit' spell.pk %}" class="btn btn-warning btn-sm me-2">Editar</a>
+            <form action="{% url 'spell_delete' spell.pk %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

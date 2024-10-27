@@ -1,0 +1,72 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h3 class="mb-0">{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Hechizo</h3>
+    </div>
+    <div class="card-body">
+      <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="{{ form.spell_name.id_for_label }}" class="form-label">{{ form.spell_name.label }}</label>
+          <input type="text" class="form-control {% if form.spell_name.errors %}is-invalid{% endif %}" 
+                 id="{{ form.spell_name.id_for_label }}" 
+                 name="{{ form.spell_name.html_name }}"
+                 value="{{ form.spell_name.value|default:'' }}">
+          {% if form.spell_name.errors %}
+          <div class="invalid-feedback">
+            {{ form.spell_name.errors }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.spell_level.id_for_label }}" class="form-label">{{ form.spell_level.label }}</label>
+          <input type="number" class="form-control {% if form.spell_level.errors %}is-invalid{% endif %}" 
+                 id="{{ form.spell_level.id_for_label }}" 
+                 name="{{ form.spell_level.html_name }}"
+                 value="{{ form.spell_level.value|default:'' }}">
+          {% if form.spell_level.errors %}
+          <div class="invalid-feedback">
+            {{ form.spell_level.errors }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.spell_school.id_for_label }}" class="form-label">{{ form.spell_school.label }}</label>
+          <input type="text" class="form-control {% if form.spell_school.errors %}is-invalid{% endif %}" 
+                 id="{{ form.spell_school.id_for_label }}" 
+                 name="{{ form.spell_school.html_name }}"
+                 value="{{ form.spell_school.value|default:'' }}">
+          {% if form.spell_school.errors %}
+          <div class="invalid-feedback">
+            {{ form.spell_school.errors }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.spell_desc.id_for_label }}" class="form-label">{{ form.spell_desc.label }}</label>
+          <textarea class="form-control {% if form.spell_desc.errors %}is-invalid{% endif %}" 
+                    id="{{ form.spell_desc.id_for_label }}" 
+                    name="{{ form.spell_desc.html_name }}"
+                    rows="3">{{ form.spell_desc.value|default:'' }}</textarea>
+          {% if form.spell_desc.errors %}
+          <div class="invalid-feedback">
+            {{ form.spell_desc.errors }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a href="{% url 'spell_list' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
