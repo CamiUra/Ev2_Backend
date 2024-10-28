@@ -3,21 +3,22 @@ from .models import *
 
 class SpellForm(forms.ModelForm):
     SPELL_LEVEL_CHOICES = [
-         'Cantrip',
-         'Level 1',
-         'Level 2',
-         'Level 3',
-         'Level 4',
-         'Level 5',
-         'Level 6',
-         'Level 7',
-         'Level 9',
-         'Level 8',
+         ('Cantrip',''),
+         ('Level 1',''),
+         ('Level 2',''),
+         ('Level 3',''),
+         ('Level 4',''),
+         ('Level 5',''),
+         ('Level 6',''),
+         ('Level 7',''),
+         ('Level 9',''),
+         ('Level 8',''),
     ]
-
-    choices=SPELL_LEVEL_CHOICES,
-    widget=forms.Select(attrs={'class': 'form-select'}),
-    label='Nivel del hechizo'
+    spell_level = forms.MultipleChoiceField(
+        choices=SPELL_LEVEL_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-select'}),
+        label='Nivel del hechizo'
+    )
 
     class Meta:
         model = Spells
@@ -28,8 +29,8 @@ class SpellForm(forms.ModelForm):
             'spell_desc': 'Descripción'
         }
 
-#    def clean_spell_level(self):
-#        return self.cleaned_data['spell_level']
+        def clean_spell_level(self):
+            return self.cleaned_data['spell_level']
 
 class ClassForm(forms.ModelForm):
     WEAPON_CHOICES = [

@@ -2,21 +2,8 @@ from django.db import models
 
 
 class Spells(models.Model):
-    spell_choice = [
-        'Cantrip',
-        'Level 1',
-         'Level 2',
-        'Level 3',
-        'Level 4',
-        'Level 5',
-        'Level 6',
-        'Level 7',
-        'Level 8',
-        'Level 9',
-    ]
-
     spell_name = models.CharField(max_length=100)
-    spell_level = models.CharField(max_length=30, choices=spell_choice)
+    spell_level = models.CharField(max_length=30, blank=True)
     spell_school = models.CharField(max_length=50)
     spell_desc = models.TextField()
 
