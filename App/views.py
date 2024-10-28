@@ -45,9 +45,13 @@ def char_delete(request, pk):
     return render(request, 'App/char_detail.html', {'character': character})
 
 # Spell Views
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Spells
+from .forms import SpellForm
+
 def spell_list(request):
     spells = Spells.objects.all()
-    return render(request, 'App/spell_list.html', {'spell_list': spells})
+    return render(request, 'App/spell_list.html', {'spells': spells})
 
 def spell_detail(request, pk):
     spell = get_object_or_404(Spells, pk=pk)
@@ -57,8 +61,7 @@ def spell_new(request):
     if request.method == "POST":
         form = SpellForm(request.POST)
         if form.is_valid():
-            spell = form.save(commit=False)
-            spell.save()
+            spell = form.save()
             return redirect('spell_detail', pk=spell.pk)
     else:
         form = SpellForm()
@@ -69,8 +72,7 @@ def spell_edit(request, pk):
     if request.method == "POST":
         form = SpellForm(request.POST, instance=spell)
         if form.is_valid():
-            spell = form.save(commit=False)
-            spell.save()
+            spell = form.save()
             return redirect('spell_detail', pk=spell.pk)
     else:
         form = SpellForm(instance=spell)
@@ -96,11 +98,13 @@ def class_new(request):
     if request.method == "POST":
         form = ClassForm(request.POST)
         if form.is_valid():
-            class_obj = form.save(commit=False)
-            class_obj.save()
+            class_obj = form.save()
             return redirect('class_detail', pk=class_obj.pk)
+        else:
+            print(form.errors)  # For debugging
     else:
         form = ClassForm()
+    
     return render(request, 'App/class_edit.html', {'form': form})
 
 def class_edit(request, pk):
@@ -108,11 +112,18 @@ def class_edit(request, pk):
     if request.method == "POST":
         form = ClassForm(request.POST, instance=class_obj)
         if form.is_valid():
-            class_obj = form.save(commit=False)
-            class_obj.save()
+            class_obj = form.save()
             return redirect('class_detail', pk=class_obj.pk)
     else:
-        form = ClassForm(instance=class_obj)
+        # Convert stored strings back to lists for the form
+        initial_weapons = class_obj.class_weapons.split(', ') if class_obj.class_weapons else []
+        initial_armor = class_obj.class_armor.split(', ') if class_obj.class_armor else []
+        
+        form = ClassForm(instance=class_obj, initial={
+            'class_weapons': initial_weapons,
+            'class_armor': initial_armor
+        })
+    
     return render(request, 'App/class_edit.html', {'form': form})
 
 def class_delete(request, pk):

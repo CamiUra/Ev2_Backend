@@ -1,0 +1,26 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">{{ class.class_name }}</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Competencias con armas:</h5>
+            <p class="card-text">{{ class.class_weapons }}</p>
+
+            <h5 class="card-title mt-4">Competencias con armaduras:</h5>
+            <p class="card-text">{{ class.class_armor }}</p>
+
+            <h5 class="card-title mt-4">Descripción:</h5>
+            <p class="card-text">{{ class.class_desc }}</p>
+
+            <div class="mt-4">
+                <a href="{% url 'class_edit' pk=class.pk %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'class_list' %}" class="btn btn-secondary">Volver a la lista</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

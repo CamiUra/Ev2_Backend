@@ -24,7 +24,7 @@
 
         <div class="mb-3">
           <label for="{{ form.spell_level.id_for_label }}" class="form-label">{{ form.spell_level.label }}</label>
-          <input type="number" class="form-control {% if form.spell_level.errors %}is-invalid{% endif %}" 
+          <input type="text" class="form-control {% if form.spell_level.errors %}is-invalid{% endif %}" 
                  id="{{ form.spell_level.id_for_label }}" 
                  name="{{ form.spell_level.html_name }}"
                  value="{{ form.spell_level.value|default:'' }}">
