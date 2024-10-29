@@ -1,1 +1,35 @@
 {% extends "layout/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Rasgos</h2>
+  <a href="{% url 'trait_new' %}" class="btn btn-primary mb-3">Añadir Nuevo Rasgo</a>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trait in trait_list %}
+        <tr>
+            <td>{{ trait.background_type }}</td>
+            <td>{{ trait.background_desc }}</td>
+            <td>
+              <a href="{% url 'char_detail' trait.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
+              <a href="{% url 'char_edit' trait.pk %}" class="btn btn-warning btn-sm me-2">Editar</a>
+              <form action="{% url 'char_delete' trait.pk %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

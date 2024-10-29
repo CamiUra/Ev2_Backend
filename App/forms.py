@@ -2,83 +2,102 @@ from django import forms
 from .models import *
 
 class SpellForm(forms.ModelForm):
-    SPELL_LEVEL_CHOICES = [
-         ('Cantrip',''),
-         ('Level 1',''),
-         ('Level 2',''),
-         ('Level 3',''),
-         ('Level 4',''),
-         ('Level 5',''),
-         ('Level 6',''),
-         ('Level 7',''),
-         ('Level 9',''),
-         ('Level 8',''),
+    choice_spell_lvl = [
+        ('cantrip','Cantrip'),
+        ('1st','Nivel 1'),
+        ('2nd','Nivel 2'),
+        ('3rd', 'Nivel 3'),
+        ('4th', 'Nivel 4'),
+        ('5th', 'Nivel 5'),
+        ('6th', 'Nivel 6'),
+        ('7th', 'Nivel 7'),
+        ('8th', 'Nivel 8'),
+        ('9th', 'Nivel 9'),
     ]
-    spell_level = forms.MultipleChoiceField(
-        choices=SPELL_LEVEL_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-select'}),
-        label='Nivel del hechizo'
+
+    choice_spell_school = [
+        ('Abjuration', 'Abjuración'),
+        ('Conjuration', 'Conjuración'),
+        ('Evocation', 'Evocación'),
+        ('Enchantment', 'Encantamiento'),
+        ('Illusion', 'Ilusión'),
+        ('Transmutation', 'Transmutación'),
+        ('Divination', 'Adivinación'),
+        ('Necromancy', 'Necromancia'),
+    ]
+    spell_level = forms.ChoiceField(
+        choices=choice_spell_lvl,
     )
 
+    spell_school = forms.ChoiceField(
+        choices=choice_spell_school
+    )
     class Meta:
         model = Spells
         fields = ['spell_name', 'spell_level', 'spell_school', 'spell_desc']
         labels = {
             'spell_name': 'Nombre del hechizo',
+            'spell_level': 'Nivel del hechizo',
             'spell_school': 'Escuela de magia',
             'spell_desc': 'Descripción'
         }
 
-        def clean_spell_level(self):
-            return self.cleaned_data['spell_level']
-
 class ClassForm(forms.ModelForm):
-    WEAPON_CHOICES = [
+    choice_weapon = [
         ('Simple', 'Armas simples'),
         ('Martial', 'Armas marciales'),
+        ('Simple, Martial', 'Armas simples y marciales'),
     ]
 
-    ARMOR_CHOICES = [
+    choice_armor = [
         ('No armor', 'Sin armadura'),
         ('Light armor', 'Armadura ligera'), 
         ('Medium armor', 'Armadura media'),
         ('Heavy armor', 'Armadura pesada')
     ]
 
-    class_weapons = forms.MultipleChoiceField(
-        choices=WEAPON_CHOICES,
-        widget=forms.CheckboxSelectMultiple,
-        required=False,
-        label='Competencia con armas'
+    class_weapons = forms.ChoiceField(
+        choices=choice_weapon,
     )
 
-    class_armor = forms.MultipleChoiceField(
-        choices=ARMOR_CHOICES,
-        widget=forms.CheckboxSelectMultiple,
-        required=False,
-        label='Competencia con armaduras'
+    class_armor = forms.ChoiceField(
+        choices=choice_armor,
     )
 
     class Meta:
         model = Classes
         fields = ['class_name', 'class_weapons', 'class_armor', 'class_desc']
-
-    def clean_class_weapons(self):
-        weapons = self.cleaned_data.get('class_weapons', [])
-        return ', '.join(weapons)  # Convert list to comma-separated string
-
-    def clean_class_armor(self):
-        armor = self.cleaned_data.get('class_armor', [])
-        return ', '.join(armor)
+        labels = {
+            'class_name': 'Nombre de la clase',
+            'class_weapons': 'Competencia con armas',
+            'class_armor': 'Competencia con armaduras',
+            'class_desc': 'Descripción'
+        }
 class TraitForm(forms.ModelForm):
     class Meta:
         model = Traits
-        fields = ('background_type',)
+        fields = ('background_type', 'background_desc')
         labels = {
-            'background_type': 'Trasfondo'
+            'background_type': 'Trasfondo',
+            'background_desc': 'Descripción'
         }
 
 class CharForm(forms.ModelForm):
+    choice_alightment = [
+        ('LW', 'Lawful good'),
+        ('LN', 'Lawful neutral'),
+        ('LE', 'Lawful evil'),
+        ('NG', 'Neutral good'),
+        ('N', 'True neutral'),
+        ('NE', 'Neutral evil'),
+        ('CG', 'Chaotic good'),
+        ('CN', 'Chaotic neutral'),
+        ('CE', 'Chaotic evil'),
+    ]
+
+    char_alightment = forms.ChoiceField(
+        choices=choice_alightment
+    )
     class Meta:
         model = Character
         fields = ('char_name', 'char_class', 'char_spell', 'char_alightment', 'char_trait')

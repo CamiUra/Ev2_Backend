@@ -1,1 +1,39 @@
 {% extends "layout/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Clases</h2>
+  <a href="{% url 'char_new' %}" class="btn btn-primary mb-3">Añadir Nuevo Personaje</a>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Clase</th>
+          <th scope="col">Hechizos</th>
+          <th scope="col">Rasgos</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for character in char_list %}
+        <tr>
+          <td>{{ character.char_name }}</td>
+          <td>{{ character.char_class }}</td>
+          <td>{{ character.char_spell }}</td>
+          <td>{{ character.char_trait }}</td>
+          <td>
+            <a href="{% url 'char_detail' character.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
+            <a href="{% url 'char_edit' character.pk %}" class="btn btn-warning btn-sm me-2">Editar</a>
+            <form action="{% url 'char_delete' character.pk %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

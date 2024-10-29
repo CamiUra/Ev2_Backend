@@ -51,7 +51,7 @@ from .forms import SpellForm
 
 def spell_list(request):
     spells = Spells.objects.all()
-    return render(request, 'App/spell_list.html', {'spells': spells})
+    return render(request, 'App/spell_list.html', {'spell_list': spells})
 
 def spell_detail(request, pk):
     spell = get_object_or_404(Spells, pk=pk)
