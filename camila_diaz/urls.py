@@ -21,6 +21,7 @@ from App import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home' ),
+    path('home/', views.home, name='home' ),
     # Characters URLs
     path('char/', views.char_list, name='char_list'),
     path('char/<int:pk>/', views.char_detail, name='char_detail'),
