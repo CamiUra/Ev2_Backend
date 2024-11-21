@@ -84,7 +84,7 @@ class TraitForm(forms.ModelForm):
 
 class CharForm(forms.ModelForm):
     choice_alightment = [
-        ('LW', 'Lawful good'),
+        ('LG', 'Lawful good'),
         ('LN', 'Lawful neutral'),
         ('LE', 'Lawful evil'),
         ('NG', 'Neutral good'),
@@ -98,6 +98,11 @@ class CharForm(forms.ModelForm):
     char_alightment = forms.ChoiceField(
         choices=choice_alightment
     )
+    char_spell = forms.ModelMultipleChoiceField(
+        queryset=Spells.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Character
         fields = ('char_name', 'char_class', 'char_spell', 'char_alightment', 'char_trait')

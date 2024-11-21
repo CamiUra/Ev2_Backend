@@ -19,9 +19,9 @@
             <td>{{ trait.background_type }}</td>
             <td>{{ trait.background_desc }}</td>
             <td>
-              <a href="{% url 'char_detail' trait.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
-              <a href="{% url 'char_edit' trait.pk %}" class="btn btn-warning btn-sm me-2">Editar</a>
-              <form action="{% url 'char_delete' trait.pk %}" method="post" class="d-inline">
+              <a href="{% url 'trait_detail' trait.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
+              <a href="{% url 'trait_edit' trait.pk %}" class="btn btn-warning btn-sm me-2">Editar</a>
+              <form action="{% url 'trait_delete' trait.pk %}" method="post" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
               </form>

@@ -28,17 +28,10 @@ class Traits(models.Model):
 
 class Character(models.Model):
     char_name = models.CharField(max_length=30)
-    char_class = models.CharField(max_length=30)
-    char_spell = models.CharField(max_length=30)
+    char_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
+    char_spell = models.ManyToManyField(Spells, related_name="char_spells")
     char_alightment = models.CharField(max_length=30, default='N')
-    char_trait = models.CharField(max_length=255)
+    char_trait = models.ForeignKey(Traits, on_delete=models.CASCADE)
 
-
-#Para la evaluación 3
-##   char_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
-#    char_spell = models.ForeignKey(Spells, on_delete=models.CASCADE)
-#    char_alightment = models.CharField(max_length=50)
-#    char_trait = models.ForeignKey(Traits, on_delete=models.CASCADE)
-#
-#    def __str__(self):
-#        return self.char_name
+    def __str__(self):
+        return self.char_name

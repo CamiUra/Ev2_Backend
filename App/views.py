@@ -18,8 +18,7 @@ def char_new(request):
     if request.method == "POST":
         form = CharForm(request.POST)
         if form.is_valid():
-            character = form.save(commit=False)
-            character.save()
+            character = form.save()
             return redirect('char_detail', pk=character.pk)
     else:
         form = CharForm()
@@ -30,8 +29,7 @@ def char_edit(request, pk):
     if request.method == "POST":
         form = CharForm(request.POST, instance=character)
         if form.is_valid():
-            character = form.save(commit=False)
-            character.save()
+            character = form.save()
             return redirect('char_detail', pk=character.pk)
     else:
         form = CharForm(instance=character)
@@ -45,9 +43,6 @@ def char_delete(request, pk):
     return render(request, 'App/char_detail.html', {'character': character})
 
 # Spell Views
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Spells
-from .forms import SpellForm
 
 def spell_list(request):
     spells = Spells.objects.all()

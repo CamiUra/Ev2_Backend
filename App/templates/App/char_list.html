@@ -10,7 +10,7 @@
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Clase</th>
-          <th scope="col">Hechizos</th>
+          <th scope="col">Alineamiento</th>
           <th scope="col">Rasgos</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -20,7 +20,7 @@
         <tr>
           <td>{{ character.char_name }}</td>
           <td>{{ character.char_class }}</td>
-          <td>{{ character.char_spell }}</td>
+          <td>{{ character.char_alightment }}</td>
           <td>{{ character.char_trait }}</td>
           <td>
             <a href="{% url 'char_detail' character.pk %}" class="btn btn-info btn-sm me-2">Detalles</a>
